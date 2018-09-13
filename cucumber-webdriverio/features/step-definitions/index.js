@@ -67,8 +67,9 @@ When(/^I fill with (.*) and (.*)$/ , (email, password) => {
     passwordInput.keys(password)
 });
 
-When(/^I sign up with (.*) and (.*) and (.*) and (.*) and (.*) and (.*)$/ , (name, lastname, email, universidad, maestria, password) => {
+When(/^I sign up with (.*) and (.*) and (.*) and (.*) and (.*) and (.*) and (.*) and(.*)$/ , (name, lastname, email, universidad, maestria, password, pregrado, estudia_maestria) => {
 
+    browser.waitForVisible('.cajaSignUp', 10000);
 
     var cajaLogIn = browser.element('.cajaSignUp');
 
@@ -86,16 +87,21 @@ When(/^I sign up with (.*) and (.*) and (.*) and (.*) and (.*) and (.*)$/ , (nam
 
     var universidadInput = cajaLogIn.element('select[name="idUniversidad"]');
     universidadInput.selectByVisibleText(universidad);
+
+    if(estudia_maestria === 'true'){
     
-    /*universidadInput.click();
-    universidadInput.keys(lastname);*/
 
-    var maestriaInput = cajaLogIn.element('input[type="checkbox"].jsx-527058112');
-    maestriaInput.click();
+      var maestriaInput = cajaLogIn.element('input[type="checkbox"].jsx-527058112');
+      maestriaInput.click();
 
 
-    var programaInput = cajaLogIn.element('select[name="idPrograma"]');
-    programaInput.selectByVisibleText(maestria);
+      var programaInput = cajaLogIn.element('select[name="idPrograma"]');
+      programaInput.selectByVisibleText(maestria);
+
+    }else if(estudia_maestria === 'false'){
+      var programaInput = cajaLogIn.element('select[name="idPrograma"]');
+      programaInput.selectByVisibleText(pregrado);
+    }
 
     var passwordInput = cajaLogIn.element('input[name="password"]');
     passwordInput.click();
@@ -139,25 +145,11 @@ Then('I expect to see {string}', error => {
 
 
 Then('I expect to see Registro exitoso', () => {
-    try{
 
-      browser.waitForVisible('div.sweet-alert h2', 5000);
-      var alertText = browser.element('div.sweet-alert h2').getText();
-      expect(alertText).to.include(error);
+   browser.waitForVisible('div.sweet-alert h2', 20000);
+   var alertText = browser.element('div.sweet-alert h2').getText();
+   expect(alertText).to.include('Registro exitoso!');
 
-    }catch(err){
-
-    }
-
-    try{
-
-      browser.waitForVisible('div[role=alert]', 5000);
-      var alertText = browser.element('div[role=alert]').getText();
-      expect(alertText).to.include('Registro exitoso!');
-
-    }catch(err){
-
-    }
      
 });
 

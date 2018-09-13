@@ -33,16 +33,16 @@ Scenario Outline: Vamos a hacer un login exitoso, yeah!
 
 Scenario Outline: voy a registrar un nuevo usuario de maestria
   Given I go to losestudiantes home screen
-    When I open the login screen
-  
+    When I open the login screen  
 
-  And I sign up with <name> and <lastname> and <email> and <universidad> and <maestria> and <password>
+    And I sign up with <name> and <lastname> and <email> and <universidad> and <maestria> and <password> and <pregado> and <estudia_maestria>
   
-   And I try to login
-    Then I expect to see user button         
+    Then I expect to see Registro exitoso
 
    Examples:
-      | name    | lastname    | email                      | universidad              | maestria                           | password        |
-      | miso    | 4208test1   | miso4208.test1@gmail.com   | Universidad de los Andes | Maestría en Ingeniería de Software | M1s04208!T3st;  |
+      | name    | lastname    | email                      | universidad              | maestria                           | password        | pregrado           |  estudia_maestria |
+      | miso    | 4208test1   | miso4208.test1@gmail.com   | Universidad de los Andes | Maestría en Ingeniería de Software | M1s04208!T3st;  |                    |  true             |
+      | miso    | 4208test2   | miso4208.test2@gmail.com   | Universidad de los Andes |                                    | M1s04208!T3st;  | Arte               |  false            |
+      
 
  
