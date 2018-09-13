@@ -20,12 +20,29 @@ Scenario Outline: Vamos a hacer un login exitoso, yeah!
   Given I go to losestudiantes home screen
     When I open the login screen
     And I fill with <email> and <password>
+
+    And I try to login
+    And I expect to see user profile button
+    Then I logout <email> and <password>
+
+    Examples:
+      | email               | password          |
+      | julborre@gmail.com  | losEstudiantes12. |
+
+
+
+Scenario Outline: voy a registrar un nuevo usuario de maestria
+  Given I go to losestudiantes home screen
+    When I open the login screen
+  
+
+  And I sign up with <name> and <lastname> and <email> and <universidad> and <maestria> and <password>
+  
    And I try to login
-    Then I expect to see user button
+    Then I expect to see user button         
 
    Examples:
-      | email               | password          |
-      | julborre@gmail.com  | losEstudiantes12. |  
-
+      | name    | lastname    | email                      | universidad              | maestria                           | password        |
+      | miso    | 4208test1   | miso4208.test1@gmail.com   | Universidad de los Andes | Maestría en Ingeniería de Software | M1s04208!T3st;  |
 
  

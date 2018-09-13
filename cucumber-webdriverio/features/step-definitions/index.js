@@ -35,19 +35,6 @@ defineSupportCode(({Given, When, Then}) => {
 
 });
 
-/*
-  When('I fill a wrong email and password', () => {
-    var cajaLogIn = browser.element('.cajaLogIn');
-
-    var mailInput = cajaLogIn.element('input[name="correo"]');
-    mailInput.click();
-    mailInput.keys('wrongemail@example.com');
-
-    var passwordInput = cajaLogIn.element('input[name="password"]');
-    passwordInput.click();
-    passwordInput.keys('123467891')
-  });
-*/
 
   When('I try to login', () => {
     var cajaLogIn = browser.element('.cajaLogIn');
@@ -57,6 +44,14 @@ defineSupportCode(({Given, When, Then}) => {
 
 
 //########################################################################################################
+
+
+When('Then I expect to see user profile button', error => {
+    browser.waitForVisible('button#cuenta', 5000);
+    //var alertText = browser.element('.aviso.alert.alert-danger').getText();
+});
+
+
 
 
 
@@ -70,6 +65,53 @@ When(/^I fill with (.*) and (.*)$/ , (email, password) => {
     var passwordInput = cajaLogIn.element('input[name="password"]');
     passwordInput.click();
     passwordInput.keys(password)
+});
+
+When(/^I sign up with (.*) and (.*) and (.*) and (.*) and (.*) and (.*)$/ , (name, lastname, email, universidad, maestria, password) => {
+
+
+    var cajaLogIn = browser.element('.cajaSignUp');
+
+    var nombreInput = cajaLogIn.element('input[name="nombre"]');
+    nombreInput.click();
+    nombreInput.keys(name);
+
+    var apellidoInput = cajaLogIn.element('input[name="apellido"]');
+    apellidoInput.click();
+    apellidoInput.keys(lastname);
+
+    var correoInput = cajaLogIn.element('input[name="correo"]');
+    correoInput.click();
+    correoInput.keys(email);
+
+    var universidadInput = cajaLogIn.element('select[name="idUniversidad"]');
+    universidadInput.selectByVisibleText(universidad);
+    
+    /*universidadInput.click();
+    universidadInput.keys(lastname);*/
+
+    var maestriaInput = cajaLogIn.element('input[type="checkbox"].jsx-527058112');
+    maestriaInput.click();
+
+
+    var programaInput = cajaLogIn.element('select[name="idPrograma"]');
+    programaInput.selectByVisibleText(maestria);
+
+    var passwordInput = cajaLogIn.element('input[name="password"]');
+    passwordInput.click();
+    passwordInput.keys(password);
+
+
+    var aceptoInput = cajaLogIn.element('input[type="checkbox"].jsx-520551651');
+    aceptoInput.click();
+
+
+    var submitInput = cajaLogIn.element('button[type="submit"].jsx-527058112');
+    submitInput.click();
+
+
+
+
 });
 
 Then('I expect to see {string}', error => {
@@ -96,11 +138,42 @@ Then('I expect to see {string}', error => {
 });
 
 
+Then('I expect to see Registro exitoso', () => {
+    try{
+
+      browser.waitForVisible('div.sweet-alert h2', 5000);
+      var alertText = browser.element('div.sweet-alert h2').getText();
+      expect(alertText).to.include(error);
+
+    }catch(err){
+
+    }
+
+    try{
+
+      browser.waitForVisible('div[role=alert]', 5000);
+      var alertText = browser.element('div[role=alert]').getText();
+      expect(alertText).to.include('Registro exitoso!');
+
+    }catch(err){
+
+    }
+     
+});
 
 
-Then('Then I expect to see user button', error => {
-    browser.waitForVisible('button#cuenta', 5000);
-    //var alertText = browser.element('.aviso.alert.alert-danger').getText();
+Then('I logout {email} and {password}', (email, password)=> {
+
+    if(browser.isVisible('button#cuenta')) {
+      browser.click('button#cuenta');
+
+
+      browser.waitForVisible('a[role=menuitem]', 5000);
+
+      browser.click('a[role=menuitem]');
+
+    }
+
 });
 
 
