@@ -73,10 +73,37 @@ When(/^I fill with (.*) and (.*)$/ , (email, password) => {
 });
 
 Then('I expect to see {string}', error => {
-    browser.waitForVisible('.aviso.alert.alert-danger', 5000);
-    var alertText = browser.element('.aviso.alert.alert-danger').getText();
-    expect(alertText).to.include(error);
+    try{
+
+      browser.waitForVisible('.aviso.alert.alert-danger', 5000);
+      var alertText = browser.element('.aviso.alert.alert-danger').getText();
+      expect(alertText).to.include(error);
+
+    }catch(err){
+
+    }
+
+    try{
+
+      browser.waitForVisible('div[role=alert]', 5000);
+      var alertText = browser.element('div[role=alert]').getText();
+      expect(alertText).to.include(error);
+
+    }catch(err){
+
+    }
+   
 });
+
+
+
+
+Then('Then I expect to see user button', error => {
+    browser.waitForVisible('button#cuenta', 5000);
+    //var alertText = browser.element('.aviso.alert.alert-danger').getText();
+});
+
+
 
 
 //########################################################################################################
