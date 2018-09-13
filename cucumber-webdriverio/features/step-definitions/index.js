@@ -12,25 +12,22 @@ defineSupportCode(({Given, When, Then}) => {
   When('I open the login screen', () => {
 
 
-//    browser.element('div.modal-body');
 
-/*
-    browser.waitUntil(function () {
-      return browser.element('div.modal-body') == null
-    }, 10000);
-*/
+  try{
 
-
-
-    //browser.waitForVisible('button.botonIngresar', 550000);
-    
-    //browser.scroll('div.modal-body'); //ok
-
-
-//    browser.isVisible('button.botonIngresar');
-
-//    browser.click('button.botonIngresar');
+    /*
+    cuando pase a usar tabla de datos en la segunda pasada de las pruebas, 
+    cuando toma los valores de  miso@gmail.com para el usuario y password con el valor 
+    1234 molestaba la feature de  "I open the login screen", asi que lo meti dentro de este try-catch
+    porque me imagine que al pasar por segunda vez por ahi el dialogo de login ya estaba mostrado y el click
+    sobre ese elemento no funcionada y al parecer eso era! YEAH!
+    */
     browser.click('div.modal-body'); //ok
+
+  }catch(err){
+    console.log('FYB !');
+  }
+
     browser.click('button.botonIngresar');
 
 
